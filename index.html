@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>initialization...</title>
+		<link rel="stylesheet" href="./css/normalize.css" async>
+		<style>
+		@font-face{
+			font-family			: 	'PoiretOne';
+			font-style			: 	normal;
+			font-weight			: 	400;
+			src					: 	url(./font/PoiretOne.otf) format("opentype");
+		}
+		html{
+			background-color	:	#2a2a2a;
+			color				: 	#C0c0c0;
+			font-family			: 	'PoiretOne';
+			cursor				: 	url(image/cursor.png) , auto; 	
+		}
+		div , ui{ 		background-color	:	#212121; 	} 
+		</style>
+		<link rel="stylesheet" href="./css/ui/progessbar.css" async>
+		<link rel="stylesheet" href="./css/align.css" async>
+		<script src="./js/ui/errorhandle.js" async></script>
+		<script src="./js/ui/init.js" defer></script>
+		<script>
+		document.addEventListener( 'DOMContentLoaded', function () {
+			getScript("./js/ui/progessbar.js",function(){
+				setProgessStatus("initializing..");
+				setProgessBar(10);
+				init(["./js/jquery-2.2.0.min.js","./js/jquery_plugin/jq_disablecpr.js"],"initialization failed",10,function(){
+					setProgessStatus("fetching plugin..");
+					setProgessBar(50);
+					init(["./js/ui/datetime.js","./js/ui/ui.js","./plugin/font-awesome-4.5.0/css/font-awesome.min.css"],"unable to fetching plugin",50,function(){
+						setProgessBar(90);
+						setProgessStatus("cleaning up..");
+						$('<img/>').attr('src', './image/background.jpg').load(function() {
+							updateDateTime();
+							setProgessBar(100);
+							setProgessStatus("built v"+ getVersion());
+							$("div.ProgessBar" ).fadeOut(800).promise().done(function() {
+								$('html').css('background-image', 'url(./image/background.jpg)');
+								$("div#sys_DateTime").fadeIn().promise().done(function() {
+									LoadUI("ui#sys_LoginForm");
+									$(document).attr("title", "DefyStudio Cloud | built v"+ getVersion());
+								});
+							});
+							$(this).remove();
+						}).error(function(){
+							ErrorHandle("initial error at time");
+						});
+					});
+				});
+			},function(){
+				ErrorHandle("browser is outdated");
+			});
+		}, false );
+		</script> 
+		<link rel="stylesheet" href="./css/ui/ui.css" async>
+		<link rel="stylesheet" href="./css/ui/datetime.css" async>
+	</head>
+	<body>
+		<div id="sys_progessbar" class="ProgessBar center">
+			<div class="ProgessBar">
+				<a>the browser is not supported<a>
+			</div> 
+		</div> 
+		<div id="sys_DateTime" title="DateTime"> 
+			<p class="time">--:--</p> 
+			<p class="date">Monday 01 , January 2016</p>
+		</div> 
+		<ui id="sys_LoginForm" title="oAuth Login" class="ui center" height="6em" width="30em" url="ui/login.html"> 
+			<div></div>
+		</ui>
+	</body> 
+</html>

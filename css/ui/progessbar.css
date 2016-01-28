@@ -1,0 +1,14 @@
+div.ProgessBar , ui.ProgessBar {
+	background-color	:	#212121;
+	width				:	30%;
+	height				:	0.2em;
+}
+div.ProgessBar > div , ui.ProgessBar > div{
+	margin				:	0;
+	background-color	:	#c0c0c0;
+	width				:	100%;
+}
+div.ProgessBar > div > a , ui.ProgessBar > div > a{
+	white-space			:	nowrap;
+	line-height			:	2em;
+}
