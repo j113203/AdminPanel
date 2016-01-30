@@ -1,0 +1,1 @@
+$("body").bind("cut copy paste contextmenu selectstart",function(a){a.preventDefault()});

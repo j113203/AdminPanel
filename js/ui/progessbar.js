@@ -1,18 +1,25 @@
-function createProgessBar(e){
-	$( e ).addClass( "ProgessBar" );
-	$( e ).append('<div class="ProgessBar"><a><a></div>');
-}
-function remoteProgessBar(e){
-	$( e +"> div.ProgessBar" ).remove();
-	$( e ).removeClass( "ProgessBar" );
-}
-function setProgessStatus(value,e){
-	e = e || "div#sys_progessbar > div.ProgessBar > a";
-	document.querySelector(e).innerHTML = value;
-}
-function setProgessBar(value,e){
-	e = e || "div#sys_progessbar > div.ProgessBar";
-	if (value<0){value=0}
-	if (value>100){value=100}
-	document.querySelector(e).style.width = value+"%";
+function progessbar(e){
+	this.e = e;
+	this.create = function(){
+
+		//alert($(this.e).parents().eq(0).html());
+		$(this.e.substring(0,this.e.lastIndexOf(">"))).append('<progessbar class="ProgessBar"><span style="width:100%"></span><a></a></progessbar>');
+	};
+	this.remove = function(){
+		$(this.e).remove();
+	};
+	this.getValue = function(){
+		return $(this.e+">span").width();
+	};
+	this.setValue = function(value,callback){
+		callback=callback||function(){};
+		$(this.e+">span").animate({width:value+"%"},500,callback);
+		//$(this.e+">span").width(value+"%");
+	};
+	this.getStatus = function(){
+		return $(this.e+">a").html();
+	};
+	this.setStatus = function(status){
+		$(this.e+">a").html(status);
+	};
 }
