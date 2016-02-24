@@ -64,7 +64,7 @@ index.getScript("./js/jquery-2.2.0.min.js",function(){
 		progessbar_init.setStatus("fetching component..");
 		$("progessbar#init>span").width("0%");
 		progessbar_init.setValue(10,function(){
-			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.js","./js/jquery.rss.min.js","./js/jquery.simpleWeather.min.js","./js/ui/ui.js"],20,progessbar_init,"unable to load required component.",function(){
+			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.js","./js/jquery.rss.min.js","./js/ui/ui.js"],20,progessbar_init,"unable to load required component.",function(){
 				progessbar_init.setStatus("rendering..");
 				progessbar_init.setValue(90,function(){
 					if (typeof(dev_) == "function"){dev_();}
