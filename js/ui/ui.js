@@ -24,12 +24,12 @@ var ui_moving = $("body").on('mousedown', 'ui.movable>span', function(e) {
 			var left = e.pageX-left_;
 			if (left<0){
 				left=0;
-			}else if (left>$("html").width()-$("ui.moving").width()-em(2)){
-				left=$("html").width()-$("ui.moving").width()-em(2);
+			}else if (left>$("html").width()-$("ui.moving").width() - em(2)){
+				left=$("html").width()-$("ui.moving").width() - em(2);
 			}
 			var datetime_ = $("ui#datetime").offset();
-			if ( top>datetime_.top-$("ui.moving").height()-em(4) && left< datetime_.left+$("ui.moving").width()+em(0) ){
-				top = datetime_.top-$("ui.moving").height()-em(4);
+			if ( top>datetime_.top-$("ui.moving").height() - em(4) && left< datetime_.left+$("ui.moving").width() - em(2.5) ){
+				top = datetime_.top-$("ui.moving").height() - em(4);
 			}
 			$("ui.moving").offset({
 				top: top,
