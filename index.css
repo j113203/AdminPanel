@@ -44,10 +44,11 @@ ui#datetime.hover>div{
 ui#datetime.hover>div>div{
 	width:		15em;
 	vertical-align: top;
+	padding-top: 0.5em;
 }
 ui#datetime.hover>div>rss{
 	padding-top: 0;
-	font-size: 	0.5em;
+	font-size: 	0.8em;
 	vertical-align: top;
 }
 ui#datetime>div>rss{

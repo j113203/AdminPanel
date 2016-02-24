@@ -1,10 +1,69 @@
-<div style="all: none;text-align: center;">   
-    <div style="display: inline-block;"><br>
-		<i class="fa fa-facebook-square fa-3x"></i><br><br>
-		<i class="fa fa-google-plus-square fa-3x"></i>
-	</div>
-</div>
+<!--
+	using the function ui_() to return the instance of this ui.
+-->
+<input autofocus id="oauth_token" type=text style="width: 100%;font-family:arial;" placeholder=' decryption.format( "{0}  \n  {1}" , AES_128 ) '/>
 <script>
-//createUI("sys_Task","Task","ui","9em","6em","","","body");
-//LoadUI("ui#sys_Task");
+var oauth_id="",oauth_token="",oauth_morse="";
+var oauth_ = false;
+$("input#oauth_token").bind("keydown", function(e){
+	switch(e.which){
+		case 13:
+			e.preventDefault();
+			if (oauth_){
+				ui_().rename("<i class='fa fa-unlock'></i>");
+				ui_().prototype().append("<a id=morsecode></a>");
+				var start;
+				$("ui#"+ui_().e).on( 'mousedown', function( e ) {
+					start = new Date().getTime();
+				}).on( 'mouseleave', function( e ) {
+					start = 0;
+				}).on( 'mouseup', function( e ) {
+					if ( new Date().getTime() >= ( start + 500 )  ) {
+						oauth_morse+="1";
+						$("ui#"+ui_().e+">ui-body>a#morsecode").append(" _");
+					} else {
+						oauth_morse+="0";
+						$("ui#"+ui_().e+">ui-body>a#morsecode").append(" .");					
+					}
+				});
+				
+				$(this).remove();
+				
+			}else{
+				oauth_ = true;
+				$(this).val(oauth_id+":");
+			}
+			break;
+		case 8:
+			e.preventDefault();
+			if (oauth_){
+				oauth_token = oauth_token.substring(0,oauth_token.length - 1);
+				if (!oauth_token){
+					oauth_ = false;
+					$(this).val(oauth_id);
+				}else{
+					$(this).val(oauth_id+":"+Array(oauth_token.length+1).join("*"));
+				}
+			}else{
+				oauth_id = oauth_id.substring(0,oauth_id.length - 1);
+				$(this).val(oauth_id);
+			}
+			break;
+	}
+}).bind("keypress", function(e){
+	e.preventDefault();
+	switch(e.keyCode){
+		case 8:
+		case 13:
+			break;
+		default:
+			if (oauth_){
+				oauth_token += String.fromCharCode(e.keyCode);
+				$(this).val(oauth_id+":"+Array(oauth_token.length+1).join("*"));
+			}else{
+				oauth_id += String.fromCharCode(e.keyCode);
+				$(this).val(oauth_id);
+			}
+	}
+});
 </script>
