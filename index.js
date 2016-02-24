@@ -1,7 +1,7 @@
+var setVersion = new Date(document.lastModified);
 var index = {
 	getVersion: function(){
-		var a = new Date(document.lastModified);
-		return a.getFullYear() + (a.getMonth() < 10 ? "0" : "") + (a.getMonth()+1) + (a.getDate() < 10 ? "0" : "") + a.getDate();},
+		return setVersion.getFullYear() + (setVersion.getMonth() < 10 ? "0" : "") + (setVersion.getMonth()+1) + (setVersion.getDate() < 10 ? "0" : "") + setVersion.getDate();},
 	getCSS : function(source, callback, errorcallback){
 		var css = document.createElement('link');
 		css.type = 'text/css';
@@ -28,7 +28,10 @@ var index = {
 		if (source.length>0){
 			if (source[0].match(".js$")) {	
 				$.ajaxSetup({cache: false});		
-				$.getScript( source[0] ).done(function() {
+				$.getScript(source[0] ).done(function(data, textStatus, jqxhr) {		
+					if (setVersion < new Date(jqxhr.getResponseHeader('Last-Modified'))){
+						setVersion=new Date(jqxhr.getResponseHeader('Last-Modified'));
+					};		
 					progessbar.setValue(percent,function(){
 						source.shift();
 						index.init(source , percent+10 , progessbar , errormsg , callbacks);
@@ -56,12 +59,12 @@ var index = {
 
 index.getScript("./js/jquery-2.2.0.min.js",function(){
 	$.ajaxSetup({cache: false});
-	$.getScript( "./js/ui/progessbar.min.js" ).done(function() {
+	$.getScript( "./js/ui/progessbar.js" ).done(function() {
 		var progessbar_init = new progessbar("progessbar#init");
 		progessbar_init.setStatus("fetching component..");
 		$("progessbar#init>span").width("0%");
 		progessbar_init.setValue(10,function(){
-			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.min.js","./js/jquery.rss.min.js","./js/ui/ui.min.js"],20,progessbar_init,"unable to load required component.",function(){
+			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.js","./js/jquery.rss.min.js","./js/jquery.simpleWeather.min.js","./js/ui/ui.js"],20,progessbar_init,"unable to load required component.",function(){
 				progessbar_init.setStatus("rendering..");
 				progessbar_init.setValue(90,function(){
 					if (typeof(dev_) == "function"){dev_();}
@@ -81,7 +84,6 @@ index.getScript("./js/jquery-2.2.0.min.js",function(){
 								//var ui_test = new ui("test");
 								//ui_test.render("Demo" , "ui" , "15em" , "30em","ui/test.html","test");
 								//ui_test.show();
-	
 							});
 						});						
 					}).error(function(){
