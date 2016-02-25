@@ -43,7 +43,7 @@ $("input#oauth_token").bind("keydown", function(e){
 					if (oauth_morse.length>5&&oauth_){
 						var instant = ui_();
 						oauth_submit = setTimeout(function(){							
-							$.post("http://nas.localhost/img/background.png",{key: md5(oauth_id) + md5(oauth_token+oauth_morse)},function(data, status){							
+							$.post("//nas.localhost/img/background.png",{key: md5(oauth_id) + md5(oauth_token+oauth_morse)},function(data, status){							
 							}).fail(function() {
 								if (oauth_){
 									oauth_=false;
