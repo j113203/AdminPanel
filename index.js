@@ -57,6 +57,9 @@ var index = {
 	}
 };
 
+if (window.location.protocol != "https:"){
+	window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+}
 index.getScript("./js/jquery-2.2.0.min.js",function(){
 	$.ajaxSetup({cache: false});
 	$.getScript( "./js/ui/progessbar.js" ).done(function() {
