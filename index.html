@@ -17,18 +17,18 @@ function dev(){
 	
 	var shortcut_demo1 = new shortcut("demo1");
 	var shortcut_demo2 = new shortcut("demo2");
-	shortcut_demo1.render("establish demo","<i class='fa fa-lock'></i>",function(){
+	shortcut_demo1.render("establish demo 1","<i class='fa fa-lock'></i>",function(){
 		var ui_demo = new ui("demo1");
-		ui_demo.render("<i class='fa fa-lock'></i>","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'><input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
+		ui_demo.render("<i class='fa fa-lock'></i> demo 1","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'> <input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
 		ui_demo.show("middle right");
 	});
 	var ui_demo2 = new ui("demo2");
-	ui_demo2.render("<i class='fa fa-lock'></i>","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'><input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
-	shortcut_demo2.render("visable demo","<i class='fa fa-lock'></i>",function(){
+	ui_demo2.render("<i class='fa fa-lock'></i> demo 2","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'> <input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
+	shortcut_demo2.render("visible demo 2","<i class='fa fa-lock'></i>",function(){
 		ui_demo2.show("top right");
 	});
 	shortcut_demo1.show();
-	shortcut_demo2.show();
+	shortcut_demo2.show("5em");
 	
 	//ui_oauth.show("middle middle");
 	//ui_oauth.maximum();

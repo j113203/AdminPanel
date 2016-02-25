@@ -23,9 +23,11 @@ function shortcut(e){
 		left_ = left_ || "2em";
 		$("shortcut#"+this.e).css("top",top_);
 		$("shortcut#"+this.e).css("left",left_);
+		$("shortcut#"+this.e).css("cursor","hand");
+		$("shortcut#"+this.e+">span").css("cursor","initial");
 		$("shortcut#"+this.e).fadeIn();
 		var instant = this;
-		$("shortcut#"+this.e ).dblclick(function(e){
+		$("shortcut#"+this.e ).click(function(e){
 			if ( e.target.nodeName != "SPAN" && e.target.nodeName != "I" ){
 				instant.href();
 			}		
