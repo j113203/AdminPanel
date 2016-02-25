@@ -26,8 +26,11 @@ var index = {
 		script.src = source+"?"+index.getVersion();},
 	init : function(source , percent , progessbar , errormsg , callbacks){
 		if (source.length>0){
+			if (percent>90){
+				percent=90;
+			}
 			if (source[0].match(".js$")) {	
-				$.ajaxSetup({cache: false});		
+				$.ajaxSetup({cache: false});				
 				$.getScript(source[0] ).done(function(data, textStatus, jqxhr) {		
 					if (setVersion < new Date(jqxhr.getResponseHeader('Last-Modified'))){
 						setVersion=new Date(jqxhr.getResponseHeader('Last-Modified'));

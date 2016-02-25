@@ -168,6 +168,8 @@ function ui(e){
 		$("ui#"+this.e+">span").css('color', '#C0c0c0');
 		$("ui#"+this.e+">progessbar>span").css('background', '#2a2a2a');
 		$("ui#"+this.e+">progessbar").css('background', '#C0c0c0');
+		$("ui#"+this.e).css("cursor","hand");
+		$("ui#"+this.e+">span").css("cursor","initial");
 		this.progessbar.setStatus(a);
 		var instant = this;
 		$("ui#"+this.e).click(function(e){
