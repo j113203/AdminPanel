@@ -161,7 +161,7 @@ function ui(e){
 		
 	};
 	this.error = function(a , callback){
-		//callback=callback||function(){};
+		callback=callback||function(){};
 		$("ui#"+this.e).css('background', '#C0c0c0');
 		$("ui#"+this.e).css('color', '#2a2a2a');
 		$("ui#"+this.e+">span").css('background', '#2a2a2a');
