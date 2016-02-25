@@ -157,7 +157,8 @@ function ui(e){
 	this.minimum = function(){
 		
 	};
-	this.error = function(a){
+	this.error = function(a , callback){
+		//callback=callback||function(){};
 		$("ui#"+this.e).css('background', '#C0c0c0');
 		$("ui#"+this.e).css('color', '#2a2a2a');
 		$("ui#"+this.e+">span").css('background', '#2a2a2a');
@@ -165,6 +166,15 @@ function ui(e){
 		$("ui#"+this.e+">progessbar>span").css('background', '#2a2a2a');
 		$("ui#"+this.e+">progessbar").css('background', '#C0c0c0');
 		this.progessbar.setStatus(a);
+		var instant = this;
+		$("ui#"+this.e).click(function(e){
+			if (e.target !== this){
+				return;
+			}else{
+				callback();
+				instant.kill();
+			}		
+		});
 	};
 	this.centerScreen = function(){
 		this.position("middle middle");

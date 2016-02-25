@@ -8,7 +8,7 @@ ui#oauth > ui-body > p#morsecode > div{
 	display	: 	inline-block;
 }
 </style>
-<input autofocus id="oauth_token" type=text style="width: 100%;font-family:arial;" placeholder=' decryption.format( "{0}  \n  {1}" , AES_128 ) '/>
+<input autofocus id="oauth_token" type=text style="width: 100%;font-family:arial;" placeholder='decryption.format( "{0}  \n  {1}" , AES_128 ) '/>
 <script>
 var oauth_id="",oauth_token="",oauth_morse="";
 var oauth_ = false;
@@ -16,30 +16,45 @@ $("input#oauth_token").bind("keydown", function(e){
 	switch(e.which){
 		case 13:
 			e.preventDefault();
-			if (oauth_&&oauth_token){
+			if (oauth_&&oauth_token){		
 				ui_().rename("<i class='fa fa-barcode'></i>");
 				ui_().prototype().append("<p id=morsecode>enter the patten of your morse code by <i class='fa fa-mouse-pointer'></i></p>");
 				var start=0;
 				var oauth_submit;
 				$("ui#"+ui_().e).on( 'mousedown', function( e ) {
+					if (e.target !== this){
+						return;
+					}
 					start = new Date().getTime();
 					clearTimeout(oauth_submit);
 					if (!oauth_morse){
 						$("ui#"+ui_().e+">ui-body>p#morsecode").html("");
 					}
 				}).on( 'mouseup', function( e ) {
-					if ( new Date().getTime() >= ( start + 500 )  ) {
+					if (e.target !== this){
+						return;
+					}else if ( new Date().getTime() >= ( start + 500 )  ) {
 						oauth_morse+="1";
 						$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:black;width:2em;'></div>");
-					} else {
+					}else{
 						oauth_morse+="0";
 						$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:white;'></div>");					
 					}
-					if (oauth_morse.length>5){
+					if (oauth_morse.length>5&&oauth_){
 						var instant = ui_();
-						oauth_submit = setTimeout(function(){
+						oauth_submit = setTimeout(function(){							
+							$.post("http://nas.localhost/img/background.png",{key: md5(oauth_id) + md5(oauth_token+oauth_morse)},function(data, status){							
+							}).fail(function() {
+								if (oauth_){
+									oauth_=false;
+									alert( "invalid identity id or token",function(){
+										var ui_oauth = new ui("oauth");
+										ui_oauth.render("<i class='fa fa-lock'></i>","","2em","22em","./ui/oauth.html","","top:100;left:100;");
+										ui_oauth.show("middle middle");
+									});
+								}
+							});
 							instant.kill();
-							alert("userid: "+oauth_id+"\ntoken: "+oauth_token+"\nsalt: "+oauth_morse);
 						}, 1000);
 					}
 				});				
