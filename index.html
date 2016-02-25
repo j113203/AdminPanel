@@ -13,13 +13,22 @@ function dev(){
 	var ui_oauth = new ui("oauth");
 	//ui_oauth.render("oAuth Login","","12em","8em","./ui/oauth.html","","top:100;left:100;","canmaximum=1");
 	ui_oauth.render("<i class='fa fa-lock'></i>","","2em","22em","./ui/oauth.html","","top:100;left:100;");
+	ui_oauth.show("middle middle");
 	
-	
-	var shortcut_demo = new shortcut("demo");
-	shortcut_demo.render("demo shortcut for showing the login form","<i class='fa fa-lock'></i>",function(){
-		ui_oauth.show("middle middle");
+	var shortcut_demo1 = new shortcut("demo1");
+	var shortcut_demo2 = new shortcut("demo2");
+	shortcut_demo1.render("establish demo","<i class='fa fa-lock'></i>",function(){
+		var ui_demo = new ui("demo1");
+		ui_demo.render("<i class='fa fa-lock'></i>","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'><input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
+		ui_demo.show("middle right");
 	});
-	shortcut_demo.show();
+	var ui_demo2 = new ui("demo2");
+	ui_demo2.render("<i class='fa fa-lock'></i>","","2em","10em","","<input type=button onclick='ui_().kill()' value='kill me'><input type=button onclick='ui_().hide()' value='hide me'>","top:100;left:100;");
+	shortcut_demo2.render("visable demo","<i class='fa fa-lock'></i>",function(){
+		ui_demo2.show("top right");
+	});
+	shortcut_demo1.show();
+	shortcut_demo2.show();
 	
 	//ui_oauth.show("middle middle");
 	//ui_oauth.maximum();
