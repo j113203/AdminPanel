@@ -7,6 +7,6 @@ function random(min,max) {
 	var length = message.length/2+"em" || "10em";
 	ui_alert.render("<i class='fa fa-exclamation-triangle'></i>","","2em",length,"",message,"top:100;left:100;");
     ui_alert.show("middle middle");
-	ui_alert.error(message,callback);
+	ui_alert.error("",callback);
   };
 })(window.alert);
