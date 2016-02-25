@@ -13,7 +13,14 @@ function dev(){
 	var ui_oauth = new ui("oauth");
 	//ui_oauth.render("oAuth Login","","12em","8em","./ui/oauth.html","","top:100;left:100;","canmaximum=1");
 	ui_oauth.render("<i class='fa fa-lock'></i>","","2em","22em","./ui/oauth.html","","top:100;left:100;");
-	ui_oauth.show("middle middle");
+	
+	
+	var shortcut_demo = new shortcut("demo");
+	shortcut_demo.render("demo shortcut for showing the login form","<i class='fa fa-lock'></i>",function(){
+		ui_oauth.show("middle middle");
+	});
+	shortcut_demo.show();
+	
 	//ui_oauth.show("middle middle");
 	//ui_oauth.maximum();
 	//ui_oauth.centerScreen();

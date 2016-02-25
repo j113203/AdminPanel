@@ -6,41 +6,44 @@ function px(input) {
     var emSize = parseFloat($("body").css("font-size"));
     return (input / emSize);
 }
-var ui_moving = $("body").on('mousedown', 'ui.movable>span', function(e) {
-	var canmove = $(this).parents().eq(0).attr("canmaximum") || "1";
-	if(canmove =="1"){
-		$(this).parents().eq(0).addClass('moving');
-		var offset_ = $(this).offset();
-		var top_ = e.pageY - offset_.top;
-		var left_ = e.pageX - offset_.left;
-		$("body").on('mousemove', function(e) {
-			$("ui.moving>span").css('cursor', 'move');
-			var top = e.pageY-top_;
-			if (top<0){
-				top=0;
-			}else if (top>$("html").height()-$("ui.moving").height()-em(4)){
-				top=$("html").height()-$("ui.moving").height()-em(4);
-			}
-			var left = e.pageX-left_;
-			if (left<0){
-				left=0;
-			}else if (left>$("html").width()-$("ui.moving").width() - em(2)){
-				left=$("html").width()-$("ui.moving").width() - em(2);
-			}
-			var datetime_ = $("ui#datetime").offset();
-			if ( top>datetime_.top-$("ui.moving").height() - em(4) && left< datetime_.left+$("ui.moving").width() - em(2.5) ){
-				top = datetime_.top-$("ui.moving").height() - em(4);
-			}
-			$("ui.moving").offset({
-				top: top,
-				left: left,
-			});	
-		});
-	}	
-}).on('mouseup' , function() {
-	$("ui.moving>span").css('cursor', 'initial');
-    $("ui.moving").removeClass('moving');
+
+
+$("body").on("mousedown", ".movable>span", function(e) {
+	$(this).parents().eq(0).addClass('moving');
+	var offset_ = $(this).offset();
+	var top_ = e.pageY - offset_.top;
+	var left_ = e.pageX - offset_.left;
+	$("body").on('mousemove', function(e) {
+		$(".moving>span").css('cursor', 'move');
+		var top = e.pageY-top_;
+		if (top<0){
+			top=0;
+		}else if (top>$("html").height()-$(".moving").height()-em(4)){
+			top=$("html").height()-$(".moving").height()-em(4);
+		}
+		var left = e.pageX-left_;
+		if (left<0){
+			left=0;
+		}else if (left>$("html").width()-$(".moving").width() - em(2)){
+			left=$("html").width()-$(".moving").width() - em(2);
+		}
+		var datetime_ = $("ui#datetime").offset();
+		if ( top>datetime_.top-$(".moving").height() - em(4) && left< datetime_.left+$(".moving").width() - em(2.5) ){
+			top = datetime_.top-$(".moving").height() - em(4);
+		}
+		$(".moving").offset({
+			top: top,
+			left: left,
+		});	
+	});
 });
+
+
+$("body").on('mouseup' , function() {
+	$(".moving>span").css('cursor', 'initial');
+    $(".moving").removeClass('moving');
+});
+
 function ui_(e){	
 	var sender = (e && e.target) || (window.event && window.event.srcElement);
 	//alert((new ui($(sender).parents().eq(1).attr('id'))));
@@ -70,7 +73,7 @@ function ui(e){
 		}else{
 			width_="";
 		}
-		$('<ui id="'+this.e+'" title="'+title_+'" class="'+class_+ '"'+height_+width_+'" url="'+url_+'" style="'+style_+'"'+' '+arg_+'><span>'+title_+'</span><ui-body>'+body_+'</ui-body></ui>').appendTo(e).hide();
+		$('<ui id="'+this.e+'" title="'+title_+'" class="'+class_+ '"'+height_+width_+'" url="'+url_+'" style="'+style_+'" '+arg_+'><span>'+title_+'</span><ui-body>'+body_+'</ui-body></ui>').appendTo(e).hide();
 	};
 	this.shown = function(position,callback){	
 		position = position || "";
@@ -168,9 +171,7 @@ function ui(e){
 		this.progessbar.setStatus(a);
 		var instant = this;
 		$("ui#"+this.e).click(function(e){
-			if (e.target !== this){
-				return;
-			}else{
+			if ( e.target.nodeName != "SPAN" && e.target.nodeName != "I" ){
 				callback();
 				instant.kill();
 			}		
