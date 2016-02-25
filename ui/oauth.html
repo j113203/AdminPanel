@@ -22,41 +22,41 @@ $("input#oauth_token").bind("keydown", function(e){
 				var start=0;
 				var oauth_submit;
 				$("ui#"+ui_().e).on( 'mousedown', function( e ) {
-					if (e.target !== this){
-						return;
-					}
-					start = new Date().getTime();
-					clearTimeout(oauth_submit);
-					if (!oauth_morse){
-						$("ui#"+ui_().e+">ui-body>p#morsecode").html("");
+					if ( e.target.nodeName != "SPAN" && e.target.nodeName != "I" ){
+						start = new Date().getTime();
+						clearTimeout(oauth_submit);
+						if (!oauth_morse){
+							$("ui#"+ui_().e+">ui-body>p#morsecode").html("");
+						}
 					}
 				}).on( 'mouseup', function( e ) {
-					if (e.target !== this){
-						return;
-					}else if ( new Date().getTime() >= ( start + 500 )  ) {
-						oauth_morse+="1";
-						$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:black;width:2em;'></div>");
-					}else{
-						oauth_morse+="0";
-						$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:white;'></div>");					
+					if ( e.target.nodeName != "SPAN" && e.target.nodeName != "I" ){
+						if ( new Date().getTime() >= ( start + 500 )  ) {
+							oauth_morse+="1";
+							$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:black;width:2em;'></div>");
+						}else{
+							oauth_morse+="0";
+							$("ui#"+ui_().e+">ui-body>p#morsecode").append("<div style='background-color:white;'></div>");					
+						}
+						if (oauth_morse.length>5&&oauth_){
+							var instant = ui_();
+							oauth_submit = setTimeout(function(){							
+								$.post("//nas.localhost/img/background.png",{key: md5(oauth_id) + md5(oauth_token+oauth_morse)},function(data, status){							
+								}).fail(function() {
+									if (oauth_){
+										oauth_=false;
+										alert( "invalid identity id or token",function(){
+											var ui_oauth = new ui("oauth");
+											ui_oauth.render("<i class='fa fa-lock'></i>","","2em","22em","./ui/oauth.html","","top:100;left:100;");
+											ui_oauth.show("middle middle");
+										});
+									}
+								});
+								instant.kill();
+							}, 1000);
+						}
 					}
-					if (oauth_morse.length>5&&oauth_){
-						var instant = ui_();
-						oauth_submit = setTimeout(function(){							
-							$.post("//nas.localhost/img/background.png",{key: md5(oauth_id) + md5(oauth_token+oauth_morse)},function(data, status){							
-							}).fail(function() {
-								if (oauth_){
-									oauth_=false;
-									alert( "invalid identity id or token",function(){
-										var ui_oauth = new ui("oauth");
-										ui_oauth.render("<i class='fa fa-lock'></i>","","2em","22em","./ui/oauth.html","","top:100;left:100;");
-										ui_oauth.show("middle middle");
-									});
-								}
-							});
-							instant.kill();
-						}, 1000);
-					}
+					
 				});				
 				$(this).remove();
 			}else if(oauth_id){

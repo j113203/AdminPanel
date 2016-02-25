@@ -10,7 +10,29 @@ ui{
 	padding-top:		3em;
 	border-radius:		0.2em;
 }
+shortcut{
+	position: 			absolute;
+	display: 			block;
+	max-width:			10em;
+	height:				0.2em;
+	background-color:	#212121;
+	line-height	:		0em;
+	opacity: 			0.6;
+	padding: 			0.8em;
+	padding-left:		2em;
+	border-radius:		0.2em;
+	overflow:			hidden;
+	white-space			: 	nowrap;
+}
 ui > span {
+	background-color	: 	black;
+	position			: 	absolute;
+	top					: 	0;
+	left				: 	0;
+	padding				: 	0.4em;
+	line-height			:	1.5em;
+}
+shortcut > span {
 	background-color	: 	black;
 	position			: 	absolute;
 	top					: 	0;

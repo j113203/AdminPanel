@@ -10,3 +10,4 @@ function random(min,max) {
 	ui_alert.error("",callback);
   };
 })(window.alert);
+//});
