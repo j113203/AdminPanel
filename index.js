@@ -1,5 +1,14 @@
 var setVersion = new Date(document.lastModified);
 var index = {
+	getBypass: function(){
+		if ($.browser.msie){
+			if ($.browser.version>=11){
+				return true;
+			}
+		}else if($.browser.mozilla){
+				
+		}
+		return false;},
 	getVersion: function(){
 		return setVersion.getFullYear() + (setVersion.getMonth() < 10 ? "0" : "") + (setVersion.getMonth()+1) + (setVersion.getDate() < 10 ? "0" : "") + setVersion.getDate();},
 	getCSS : function(source, callback, errorcallback){
@@ -60,8 +69,9 @@ var index = {
 	}
 };
 
+
 if (window.location.protocol != "https:"){
-	window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+	//window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
 }
 index.getScript("./js/jquery-2.2.0.min.js",function(){
 	$.ajaxSetup({cache: false});
@@ -70,34 +80,35 @@ index.getScript("./js/jquery-2.2.0.min.js",function(){
 		progessbar_init.setStatus("fetching component..");
 		$("progessbar#init>span").width("0%");
 		progessbar_init.setValue(10,function(){
-			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.js","./js/jquery.rss.min.js","./js/ui/ui.js","./js/md5.js","./js/ui/alert.js","./js/ui/shortcut.js"],20,progessbar_init,"unable to load required component.",function(){
+			index.init(["./js/disablecpr.js","./css/normalize.css","./plugin/font-awesome-4.5.0/css/font-awesome.min.css","./css/ui/ui.css","./js/ui/datetime.js","./js/jquery.rss.min.js","./js/ui/ui.js","./js/md5.js","./js/ui/alert.js","./js/ui/shortcut.js","./js/jquery.browser.min.js"],20,progessbar_init,"unable to load required component.",function(){
 				progessbar_init.setStatus("rendering..");
-				progessbar_init.setValue(90,function(){
-					if (typeof(dev_) == "function"){dev_();}
-					var datetime_init = new datetime("ui#datetime");
-					datetime_init.update();
-					$('<img/>').attr('src', './img/bg.jpg?'+index.getVersion()).load(function() {						
-						progessbar_init.setStatus("built v"+ index.getVersion());
-						var instant = this;
-						progessbar_init.setValue(100,function(){
-							$("progessbar#init" ).fadeOut(1000).promise().done(function() {
-								$("body").css("background-image", 'url(./img/bg.jpg?'+index.getVersion()+')');
-								$(instant).remove();
-								$("body").hide();
-								$("body").fadeIn(1000);
-								$("ui#datetime").fadeIn();
-								if (typeof(dev) == "function"){dev();}
-								//var ui_test = new ui("test");
-								//ui_test.render("Demo" , "ui" , "15em" , "30em","ui/test.html","test");
-								//ui_test.show();
-							});
-						});						
-					}).error(function(){
-						progessbar_init.setStatus("garbage collection fail.");
-						progessbar_init.setValue(100);
+				if (!$.browser.webkit && !(index.getBypass()) ){
+					progessbar_init.setStatus("unable to rendering on non node-webkit environment.");
+					progessbar_init.setValue(100);
+				}else{
+					progessbar_init.setValue(90,function(){
+						if (typeof(dev_) == "function"){dev_();}
+						var datetime_init = new datetime("ui#datetime");
+						datetime_init.update();
+						$('<img/>').attr('src', './img/bg.jpg?'+index.getVersion()).load(function() {						
+							progessbar_init.setStatus("built v"+ index.getVersion());
+							var instant = this;
+							progessbar_init.setValue(100,function(){
+								$("progessbar#init" ).fadeOut(1000).promise().done(function() {
+									$("body").css("background-image", 'url(./img/bg.jpg?'+index.getVersion()+')');
+									$(instant).remove();
+									$("body").hide();
+									$("body").fadeIn(1000);
+									$("ui#datetime").fadeIn();
+									if (typeof(dev) == "function"){dev();}
+								});
+							});						
+						}).error(function(){
+							progessbar_init.setStatus("garbage collection fail.");
+							progessbar_init.setValue(100);
+						});
 					});
-				});
-				
+				}			
 			});
 		});
 		
