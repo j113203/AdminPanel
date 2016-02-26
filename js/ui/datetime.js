@@ -5,7 +5,7 @@ function datetime(e){
 		var a = new Date();
 		this.updateTime();
 		$(this.e+">div>div>p#date").text([ "Sunday" , "Monday" , "Tuesday" , "Wednesday" , "Thursday", "Friday" , "Saturday" ][a.getDay()] + " , "+ a.getDate() +" "+ ["February","March","April","May","June","July", "August","September", "October","November", "December"][a.getMonth()] + " " + a.getFullYear() )
-		setInterval(this.updateTime(), 60000);
+		setInterval(this.updateTime, 60000);
 		var hover = function(event){
 			$(e).unbind('click');
 			$(e).click(function(){
